@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 
 IFS=' '
 mkdir -p /data/cachedomains

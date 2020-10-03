@@ -1,5 +1,6 @@
-FROM lancachenet/generic:latest
-MAINTAINER LanCache.Net Team <team@lancache.net>
+FROM brutalgg/generic
+
+LABEL maintainer="LanCache.Net Team <team@lancache.net>"
 
 ENV GENERICCACHE_VERSION=2 \
     CACHE_MODE=monolithic \
@@ -17,10 +18,22 @@ ENV GENERICCACHE_VERSION=2 \
 
 COPY overlay/ /
 
+RUN \
+# Update and get dependencies
+  apt-get update && \
+  apt-get install -y \
+  jq \
+  git \
+  && \
+# Cleanup
+  apt-get -y autoremove && \
+  apt-get -y clean && \
+  rm -rf /var/lib/apt/lists/* && \
+  rm -rf /tmp/* && \
+  rm -rf var/tmp/*
+
 RUN mkdir -m 755 -p /data/cachedomains		;\
-	mkdir -m 755 -p /tmp/nginx				;\
-	apt-get update							;\
-	apt-get install -y jq git				;
+	mkdir -m 755 -p /tmp/nginx				;
 
 RUN git clone --depth=1 --no-single-branch https://github.com/uklans/cache-domains/ /data/cache-domains
 

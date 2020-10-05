@@ -4,7 +4,6 @@ LABEL maintainer="LanCache.Net Team <team@lancache.net>"
 
 ENV GENERICCACHE_VERSION=2 \
     CACHE_MODE=monolithic \
-    WEBUSER=www-data \
     CACHE_MEM_SIZE=500m \
     CACHE_DISK_SIZE=1000000m \
     CACHE_MAX_AGE=3560d \
@@ -30,10 +29,10 @@ RUN \
   apt-get -y clean && \
   rm -rf /var/lib/apt/lists/* && \
   rm -rf /tmp/* && \
-  rm -rf var/tmp/*
-
-RUN mkdir -m 755 -p /data/cachedomains		;\
-	mkdir -m 755 -p /tmp/nginx				;
+  rm -rf var/tmp/* && \
+# Create directories
+  mkdir -m 755 -p /data/cachedomains	;\
+	mkdir -m 755 -p /tmp/nginx				  ;
 
 RUN git clone --depth=1 --no-single-branch https://github.com/uklans/cache-domains/ /data/cache-domains
 
